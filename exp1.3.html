@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Admin Dashboard</title>
+
+<style>
+/* ================= CSS VARIABLES ================= */
+:root {
+  --bg-color: #f3f4f6;
+  --text-color: #111827;
+  --card-bg: #ffffff;
+  --accent: #6366f1;
+}
+
+body.dark {
+  --bg-color: #0f172a;
+  --text-color: #f8fafc;
+  --card-bg: #1e293b;
+  --accent: #facc15;
+}
+
+/* ================= BASIC STYLES ================= */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: var(--bg-color);
+  color: var(--text-color);
+}
+
+/* ================= GRID LAYOUT ================= */
+.dashboard {
+  display: grid;
+  grid-template-areas:
+    "header header"
+    "sidebar content";
+  grid-template-columns: 250px 1fr;
+  grid-template-rows: 70px 1fr;
+  height: 100vh;
+}
+
+.header {
+  grid-area: header;
+  background: var(--card-bg);
+  padding: 15px 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sidebar {
+  grid-area: sidebar;
+  background: var(--card-bg);
+  padding: 20px;
+  font-size: 20px;
+}
+
+.content {
+  grid-area: content;
+  padding: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 20px;
+}
+
+/* ================= CARDS ================= */
+.card {
+  background: var(--card-bg);
+  padding: 40px;
+  text-align: center;
+  border-radius: 10px;
+  font-size: 22px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+/* ================= BUTTON ================= */
+button {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 6px;
+  background: var(--accent);
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 768px) {
+  .dashboard {
+    grid-template-areas:
+      "header"
+      "content";
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    display: none;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="dashboard">
+  <header class="header">
+    <h1>Admin Dashboard</h1>
+    <button id="themeToggle">🌙 Dark Mode</button>
+  </header>
+
+  <aside class="sidebar">Navigation</aside>
+
+  <main class="content">
+    <div class="card">Analytics</div>
+    <div class="card">Users</div>
+    <div class="card">Settings</div>
+  </main>
+</div>
+
+<script>
+const toggleBtn = document.getElementById("themeToggle");
+
+// Load saved theme
+if (localStorage.getItem("theme") === "dark") {
+  document.body.classList.add("dark");
+  toggleBtn.textContent = "☀️ Light Mode";
+}
+
+// Toggle theme
+toggleBtn.addEventListener("click", () => {
+  document.body.classList.toggle("dark");
+
+  if (document.body.classList.contains("dark")) {
+    localStorage.setItem("theme", "dark");
+    toggleBtn.textContent = "☀️ Light Mode";
+  } else {
+    localStorage.setItem("theme", "light");
+    toggleBtn.textContent = "🌙 Dark Mode";
+  }
+});
+</script>
+
+</body>
+</html>
